@@ -12,11 +12,40 @@ class DataPreprocessor:
         self.df = df.copy()
         self.features = ['influence_score', 'posts', 'followers', 'avg_likes']
         self.target = '60_day_eng_rate'
+    
+    def convert_to_numeric(self, value):
+        if isinstance(value, (int, float)):
+            return value
         
+        if pd.isna(value):
+            return np.nan
+            
+        value = str(value).lower().strip()
+        multipliers = {'k': 1000, 'm': 1000000, 'b': 1000000000}
+        
+        for suffix, multiplier in multipliers.items():
+            if value.endswith(suffix):
+                try:
+                    return float(value[:-1]) * multiplier
+                except ValueError:
+                    return np.nan
+        try:
+            return float(value)
+        except ValueError:
+            return np.nan
+    
     def handle_missing_values(self):
         missing_stats = self.df.isnull().sum()
         print("Valores ausentes por coluna:")
         print(missing_stats)
+        
+        # Converter colunas com sufixos para números
+        for col in ['posts', 'followers', 'avg_likes', 'total_likes']:
+            if col in self.df.columns:
+                self.df[col] = self.df[col].apply(self.convert_to_numeric)
+        
+        # Converter taxa de engajamento para número
+        self.df[self.target] = self.df[self.target].str.rstrip('%').astype(float)
         
         numeric_cols = self.df.select_dtypes(include=[np.number]).columns
         self.df[numeric_cols] = self.df[numeric_cols].fillna(self.df[numeric_cols].median())
@@ -128,21 +157,53 @@ def plot_model_comparison(results):
     for i, metric in enumerate(['r2', 'mse', 'mae']):
         values = [results[model][metric] for model in models]
         
-        axes[i].bar(models, values)
-        axes[i].set_title(metrics[i])
+        # Criar as barras
+        bars = axes[i].bar(range(len(models)), values)
+        
+        # Configurar os ticks
+        axes[i].set_xticks(range(len(models)))
         axes[i].set_xticklabels(models, rotation=45)
+        
+        # Adicionar título
+        axes[i].set_title(metrics[i])
+        
+        # Adicionar valores sobre as barras
+        for bar in bars:
+            height = bar.get_height()
+            axes[i].text(bar.get_x() + bar.get_width()/2., height,
+                        f'{height:.3f}',
+                        ha='center', va='bottom')
     
     plt.tight_layout()
-    plt.savefig('docs/model_comparison.png')
+    plt.savefig('docs/model_comparison.png', dpi=300, bbox_inches='tight')
     plt.close()
+
+def save_results(results):
+    """Salva os resultados dos modelos em um arquivo texto"""
+    with open('docs/model_results.txt', 'w') as f:
+        f.write("RESULTADOS DOS MODELOS\n")
+        f.write("=====================\n\n")
+        
+        for model_name, metrics in results.items():
+            f.write(f"\n{model_name}:\n")
+            f.write("-" * (len(model_name) + 1) + "\n")
+            
+            # Métricas principais
+            f.write(f"R²: {metrics['r2']:.4f}\n")
+            f.write(f"MSE: {metrics['mse']:.4f}\n")
+            f.write(f"MAE: {metrics['mae']:.4f}\n")
+            f.write(f"CV Score (média): {metrics['cv_mean']:.4f}\n")
+            f.write(f"CV Score (desvio): {metrics['cv_std']:.4f}\n")
+            
+            # Coeficientes
+            f.write("\nCoeficientes:\n")
+            for feature, coef in metrics['coef'].items():
+                f.write(f"{feature}: {coef:.4f}\n")
+            
+            f.write("\n" + "="*50 + "\n")
 
 if __name__ == "__main__":
     model = EngagementModel()
     results = model.train_models()
     plot_model_comparison(results)
-    
-    with open('docs/model_results.txt', 'w') as f:
-        for model_name, metrics in results.items():
-            f.write(f"\n{model_name}:\n")
-            for metric, value in metrics.items():
-                f.write(f"{metric}: {value}\n")
+    save_results(results)
