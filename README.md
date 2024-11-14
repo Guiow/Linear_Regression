@@ -37,10 +37,7 @@ python src/exploratory_analysis.py
 - matplotlib
 - seaborn
 
-## Autor
+## Autores
 
-[Seu Nome]
-
-## Licença
-
-MIT
+- Matheus Queiroz
+- Guilherme Oliveira
