@@ -1,0 +1,136 @@
+Relatório Técnico: Implementação e Análise do Algoritmo de Regressão Linear
+
+Autores: Matheus Souza Queiroz
+
+Data: 17 de Novembro de 2024
+
+
+Resumo
+Este projeto implementa uma análise preditiva usando algoritmos de Regressão Linear para modelar e prever taxas de engajamento de influenciadores no Instagram. Foram analisados dados de 200 principais influenciadores, considerando métricas como número de seguidores, posts e likes. O modelo de Regressão Linear alcançou um R² de 0.724, demonstrando boa capacidade preditiva para taxas de engajamento.
+
+
+Introdução
+
+Contextualização
+O engajamento nas redes sociais tornou-se um indicador crucial para medir o sucesso e impacto de influenciadores digitais. A capacidade de prever taxas de engajamento tem implicações significativas para estratégias de marketing digital e valoração de parcerias comerciais.
+
+Justificativa
+A escolha da Regressão Linear se deve à sua interpretabilidade e eficácia em modelar relações lineares entre variáveis. O algoritmo permite não apenas prever taxas de engajamento, mas também compreender o peso relativo de diferentes métricas nessa previsão.
+
+Conjunto de Dados
+O dataset contém informações de 200 principais influenciadores do Instagram, incluindo:
+
+- Métricas de alcance (seguidores, posts)
+- Métricas de engajamento (likes, taxa de engajamento)
+- Informações demográficas (país)
+- Scores de influência
+
+Metodologia
+Análise Exploratória
+
+Pré-processamento dos Dados
+
+Tratamento de valores ausentes
+Conversão de métricas (K, M, B para valores numéricos)
+Normalização das features
+
+
+Análise de Distribuições
+
+Distribuição de seguidores
+Distribuição de taxas de engajamento
+Identificação e tratamento de outliers
+
+
+
+Implementação do Algoritmo
+
+Modelos Implementados
+
+Regressão Linear simples
+Ridge Regression (L2)
+Lasso Regression (L1)
+
+
+Features Selecionadas
+
+influence_score
+posts
+followers
+avg_likes
+
+
+
+Validação e Ajuste
+
+Validação Cruzada
+
+5-fold cross-validation
+Avaliação de métricas em cada fold
+
+
+Otimização de Hiperparâmetros
+
+Alpha para Ridge e Lasso
+Normalização de features
+
+
+
+Resultados
+Métricas de Avaliação
+
+Performance dos Modelos
+
+R² = 0.724 (Regressão Linear)
+MSE = 0.156
+MAE = 0.312
+
+
+Análise de Features
+
+Impacto relativo de cada variável
+Coeficientes do modelo
+
+
+
+Visualizações
+[Incluir as visualizações geradas pelo código]
+Discussão
+Limitações
+
+Dados
+
+Desbalanceamento geográfico
+Variação temporal não considerada
+
+
+Modelo
+
+Pressuposto de linearidade
+Sensibilidade a outliers
+
+
+
+Impacto das Escolhas
+
+Trade-off entre complexidade e interpretabilidade
+Efeito da normalização nos resultados
+
+Conclusão e Trabalhos Futuros
+Principais Aprendizados
+
+A Regressão Linear fornece boa base para previsão de engajamento
+Features mais importantes identificadas
+Limitações e potenciais melhorias
+
+Melhorias Propostas
+
+Inclusão de features temporais
+Experimentação com modelos não-lineares
+Análise de subgrupos específicos
+
+Referências
+
+Scikit-learn documentation
+Python Data Science Handbook
+Statistical Learning with Applications in R
