@@ -1,11 +1,7 @@
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter, A4
+from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.units import inch
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
-from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT, TA_CENTER
-import matplotlib.pyplot as plt
-import pandas as pd
+from reportlab.lib.enums import TA_JUSTIFY
 
 def create_report():
     doc = SimpleDocTemplate(
@@ -36,9 +32,10 @@ def create_report():
     # Resumo
     story.append(Paragraph("Resumo", styles['Heading2']))
     story.append(Paragraph(
-        """Este projeto implementa modelos de regressão linear para prever taxas de 
-        engajamento de influenciadores no Instagram, utilizando métricas como número 
-        de seguidores, posts e likes.""",
+        """O projeto visa implementar um modelo preditivo para estimar a taxa de engajamento de influenciadores
+        em diversas regiões do mundo. A previsão será realizada com base em variáveis independentes que estão fortemente
+        correlacionadas com a variável dependente, ou em casos onde as variáveis não apresentam correlação entre si.
+        O objetivo principal é criar um sistema eficiente de previsão, usando técnicas de regressão e análise de dados.""",
         styles['Justify']
     ))
     story.append(Spacer(1, 12))
@@ -46,16 +43,30 @@ def create_report():
     # Metodologia
     story.append(Paragraph("Metodologia", styles['Heading2']))
     story.append(Paragraph(
-        """O projeto utilizou três variações de modelos de regressão linear: 
-        Linear simples, Ridge e Lasso. Os dados foram pré-processados para 
-        remoção de outliers e normalização das features.""",
+        """O projeto utilizou três variações de modelos de regressão linear para prever a taxa de engajamento dos
+        influenciadores: regressão linear simples, Ridge e Lasso. O processo de modelagem incluiu a análise e o
+        pré-processamento dos dados, onde foram realizadas etapas de remoção de outliers para garantir a qualidade
+        dos dados e minimizar a influência de valores extremos no modelo. Além disso, as variáveis independentes foram
+        normalizadas para garantir que todas as features tivessem uma escala similar, o que favorece o desempenho dos modelos
+        de regressão. A seleção dos modelos foi feita com base na eficiência de cada um para lidar com dados altamente
+        correlacionados e na capacidade de regularização de Ridge e Lasso para evitar overfitting.""",
         styles['Justify']
     ))
+    story.append(Image('docs/boxplot_before_outliers.png', width=400, height=300))
     story.append(Spacer(1, 12))
     
     # Adicionar imagens
     story.append(Paragraph("Análise de Dados", styles['Heading2']))
+    story.append(Paragraph("Distribuição das Features antes tratamento de Outliers", styles['Heading4']))
+    story.append(Paragraph("""Percebe-se uma vasta quantidade de outliers em métricas como followers, avg_likes, new_post_avg_like e 
+        na variável dependente 60_day_eng_rate. Esses outliers devem ser tratados da melhor forma possível para que o modelo 
+        seja menos enviesado pelo overfitting. """))
     story.append(Image('docs/boxplot_before_outliers.png', width=400, height=300))
+    
+    story.append(Paragraph("Distribuição das Features após tratamento de Outliers", styles['Heading4']))
+    story.append(Paragraph("""Aqui ja temos uma redução considerável na quantidade de outliers em todas as variáveis 
+        independentes citadas anteriormente, principalmente na  new_post_avg_like que apenas sobrou um outlier. Dessa forma,
+        nosso modelo não será tão afetado pelos outliers no data set."""))
     story.append(Image('docs/boxplot_after_outliers.png', width=400, height=300))
     story.append(Spacer(1, 12))
     

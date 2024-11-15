@@ -3,9 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Configurar estilo
-plt.style.use('seaborn')
-
 def create_comparison_plots():
     # Dados dos modelos
     models_data = {
