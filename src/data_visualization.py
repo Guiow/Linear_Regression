@@ -4,7 +4,7 @@ import numpy as np
 
 def visualize_all(df, docs_path):
     eng_rate_distribution(df, docs_path)# 3.1 Distribuição da taxa de engajamento
-    #relation_between_followers_eng(df, docs_path)# 3.2 Relação entre seguidores e engajamento
+    relation_between_variables(df, docs_path)# 3.2 Relação entre seguidores e engajamento
     top_ten_contry_most_influencers(df, docs_path) #3.3 Top 10 países com mais influenciadores
     correlation_matrix(df, docs_path)  # 3.4 Matriz de correlação
 
@@ -17,13 +17,10 @@ def eng_rate_distribution(df, docs_path):
     plt.savefig(f'{docs_path}/engagement_distribution.png')
     plt.close()
 
-def relation_between_followers_eng(df, docs_path):
+def relation_between_variables(df, docs_path):
     plt.figure(figsize=(10, 6))
-    plt.scatter(df['followers'], df['60_day_eng_rate'], alpha=0.5)
-    plt.title('Relação entre Número de Seguidores e Taxa de Engajamento')
-    plt.xlabel('Número de Seguidores')
-    plt.ylabel('Taxa de Engajamento (%)')
-    plt.savefig(f'{docs_path}/followers_vs_engagement.png')
+    sns.pairplot(df)
+    plt.savefig(f'{docs_path}/relation_between_variables.png')
     plt.close()
 
 def top_ten_contry_most_influencers(df, docs_path):

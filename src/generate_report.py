@@ -52,16 +52,44 @@ def create_report():
         correlacionados e na capacidade de regularização de Ridge e Lasso para evitar overfitting.""",
         styles['Justify']
     ))
-    story.append(Image('docs/boxplot_before_outliers.png', width=400, height=300))
     story.append(Spacer(1, 12))
     
-    # Adicionar imagens
-    story.append(Paragraph("Análise de Dados", styles['Heading2']))
-    story.append(Paragraph("Distribuição das Features antes tratamento de Outliers", styles['Heading4']))
+    # Titulo Analise Exploratoria -----------------------
+    story.append(Paragraph("Análise Exploratória", styles['Heading2']))
+
+    # Topico conhecendo os dados ------------------------
+    story.append(Paragraph("Conhecendo os Dados", styles['Heading3']))
+    story.append(Paragraph("1° Analisamos a distribuição da nossa variável dependente", styles['Heading4']))
+    story.append(Paragraph("""Percebe-mos alguns outliers com taxa de engajamento acima de 25%, no qual
+        é muito alto comparado ao resto dos dados. Devemos tratar isso."""))
+    story.append(Image('docs/raw_df/engagement_distribution.png', width=370, height=260))
+
+    story.append(Paragraph("2° Analisamos a distribuição e relação de cada uma das variáveis", styles['Heading4']))
+    story.append(Paragraph("""Percebe-se que a variável independente rank segue uma distribuição qualse constante, e tem uma
+        relação não linear com a váriavel dependente. A variável independente new_post_avg_like, segue uma distribuição bastante
+        semelhante ao da nossa variável dependente, e de uma forma não tão clara, parece se relacionar com a variável dependente.
+        de forma linear. E também, a variável new_post_avg_like parece se relacionar de forma qualse linear com avg_likes. Outra
+        observação, é praticamente todas as variáveis exceto rank, possuem outliers que devem ser tratados para melhorar
+        o desempenho do nosso modelo.
+        """))
+    story.append(Image('docs/raw_df/relation_between_variables.png', width=450, height=450))
+
+    story.append(Paragraph("3° Analisamos a matriz de correlação", styles['Heading4']))
+    story.append(Paragraph("""Como esperado a variável rank possui correlação qualse nula
+        com a variável dependente oque nos permite remover tranquilamente essa variável, da mesma forma as variáveis independentes
+        channel_info e country foram removidas pelo mesmo motivo em testes anteriores. E percebemos uma forte correlação entre
+        a variável dependente 60_day_eng_rate, e duas variáveis independentes new_post_avg_like e avg_likes. A correlação entre
+        as variáveis independentes new_post_avg_like e avg_likes também está alta, devemos reduzi-la no preprocessamento. A variável
+        followers também está um pouco correlacionada com total_likes, mas nada muito alarmante."""))
+    story.append(Image('docs/raw_df/correlation_matrix.png', width=450, height=450))
+    
+    story.append(Paragraph("4° Distribuição das Features antes tratamento de Outliers", styles['Heading4']))
     story.append(Paragraph("""Percebe-se uma vasta quantidade de outliers em métricas como followers, avg_likes, new_post_avg_like e 
         na variável dependente 60_day_eng_rate. Esses outliers devem ser tratados da melhor forma possível para que o modelo 
         seja menos enviesado pelo overfitting. """))
     story.append(Image('docs/boxplot_before_outliers.png', width=400, height=300))
+
+    
     
     story.append(Paragraph("Distribuição das Features após tratamento de Outliers", styles['Heading4']))
     story.append(Paragraph("""Aqui ja temos uma redução considerável na quantidade de outliers em todas as variáveis 
