@@ -11,6 +11,7 @@ def exploratory_analysis():
     visualize_all(df, 'docs/raw_df')
 
 def initial_data_analysis():
+    """Mostra os dados do data frame para reconhecimento inicial"""
     print("Dimensões do dataset:", df.shape)
     print("\nPrimeiras 5 linhas:")
     print(df.head())
@@ -20,11 +21,13 @@ def initial_data_analysis():
     print(df.describe())
 
 def num_values_analysis():
+    """Mostra a quantidade de valores nulls por coluna"""
     print("\nValores nulos por coluna:")
     print(df.isnull().sum())
 
 def calculate_results():
-        return {
+    """Calcula os resultados do df sem nenhum preprocessamento"""
+    return {
         'total_influencers': len(df),
         'avg_engagement': df['60_day_eng_rate'].mean(),
         'median_followers': df['followers'].median(),

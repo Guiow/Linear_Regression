@@ -4,6 +4,7 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
 from reportlab.lib.enums import TA_JUSTIFY
 
 def create_report():
+    """Cria pdf com toda documentacao"""
     doc = SimpleDocTemplate(
         "docs/Relatorio_Tecnico_RegLinear.pdf",
         pagesize=A4,
@@ -127,7 +128,7 @@ def create_report():
     # Titulo Implementacao do Algoritmo -----------------------
     story.append(Paragraph("Implementação do Algoritmo", styles['Heading2']))
     story.append(Paragraph("""O algoritmo foi implementado usando 3 modelos diferentes da biblioteca 
-        sklearn.linear_model sendo eles o modelo regular de regressão linear, o ~de Lasso e o de Ridge.
+        sklearn.linear_model sendo eles o modelo regular de regressão linear, o de Lasso e o de Ridge.
         Eles foram treinados com os mesmos dados para comparação posteriormente. Depois de alguns testes decidimos que
         0.75% é o valor ideal para treinamento do nosso modelo. E claro, todos os modelos foram treinados com dados
         preprocessados."""))
@@ -173,23 +174,65 @@ def create_report():
     story.append(Image('docs/HomoscedasticityRidge.png', width=400, height=300))
     story.append(Image('docs/HomoscedasticityLasso.png', width=400, height=300))
 
-    # Resultados
+    # TItulo Resultados ------------------------------------------
     story.append(Paragraph("Resultados", styles['Heading2']))
-    story.append(Image('docs/model_comparison.png', width=400, height=300))
+
+    #Topico Metricas e Coeficientes de Correlacao -----------------
+    story.append(Paragraph("Metricas e Coeficientes de Correlação", styles['Heading3']))
+    story.append(Paragraph("Metricas", styles['Heading4']))
+    story.append(Paragraph("""Conseguimos uma boa porcentagem em cada uma das métricas utilizadas para validar o modelo, o
+        R² em cada um dos modelos está em aproximadamente 0.90, no qual é um ótimo resultado para o nosso data set, também
+        utilizamos a validação cruzada para o R² que ficou entre 0.8 à 0.86 nos modelos, oque é um ótimo resultado. O desvio padrão
+        do R² também foi realizado com validação cruzada resultando em um valor entre 0.07 à 0.15 nos modelos, consideramos
+        um valor aceitável. As métricas estão dispostas no gráfico da esquerda."""))
+    story.append(Paragraph("Coeficientes", styles['Heading4']))
+    story.append(Paragraph("""Nota-se que a variável independente de longe mais importante nos nossos modelos é a 
+        new_post_avg_like, em todos os modelos ela apresenta um alto valor de correlação com a variável dependente,
+        ou seja ela é a principal variável do nosso modelo. Outra variável que apresenta uma correlação inversa com
+        o nosso target é a followers, tendo um coeficiente de correlação negativo em todos os modelos.
+        Uma observação que o modelo Lasso deixa bem evidente, é que não são necessárias variáveis como
+        influence_score, total_likes e avg_likes para o desempenho do nosso modelo. Se à removermos teremos
+        um modelo tão bom quanto. Deixando opcional a escolha de deixar as variáveis ou remove-las."""))
+    story.append(Image('docs/model_comparison_detailed.png', width=500, height=260))
+
+    #Topico Visualizacao dos modelos
+    story.append(Paragraph("Visualização dos modelos", styles['Heading3']))
+    story.append(Paragraph("""Ambos os 3 modelos apresentam uma abordagem linear em relação aos dados, isso é 
+        evidenciado por cada um dos gráficos a seguir:"""))
     
-    # Ler resultados do arquivo
-    with open('docs/model_results.txt', 'r') as f:
-        results = f.read()
-    story.append(Paragraph(results, styles['Normal']))
-    
-    # Conclusão
-    story.append(Paragraph("Conclusão", styles['Heading2']))
-    story.append(Paragraph(
-        """Com base nos resultados obtidos, o modelo de Regressão Linear 
-        demonstrou melhor performance para a predição de taxas de engajamento, 
-        apresentando um equilíbrio adequado entre complexidade e acurácia.""",
-        styles['Justify']
-    ))
+    story.append(Paragraph("Modelo de Regressão Linear", styles['Heading4']))
+    story.append(Image('docs/linear_regression_predictions.png', width=300, height=300))
+
+    story.append(Paragraph("Modelo de Ridge", styles['Heading4']))
+    story.append(Image('docs/ridge_predictions.png', width=300, height=300))
+
+    story.append(Paragraph("Modelo de Lasso", styles['Heading4']))
+    story.append(Image('docs/lasso_predictions.png', width=300, height=300))
+
+    #Titulo Discussão ------------------------------------------------
+    story.append(Paragraph("Discussão", styles['Heading2']))
+    story.append(Paragraph("""A partir dos resultados encontrados nós podemos simplificar o modelo e 
+        se quisessemos, mas como não precisamos de um modelo muito simples, que por sua vez pode não capturar 
+        as complexidades dos dados. Usamos 75% dos dados para treinar os modelos, oque nos resultou em apenas.
+        100 valores aproximadamente, com um conjunto maior de dados talvez conseguiriamos uma precisão maior.
+        Enquanto ao desempenho do modelo achamos que ambos os três ficaram bons para prever a taxa de engajamento
+        uma assertividade de 0.85% em média na validação cruzada do R² indicando um bom desempenho do modelo.
+        Testamos com um mais simples também, a única coisa necessária a se fazer é dar um drop nas variáveis
+        avg_likes, total_likes e influence_score, caso precisasse-mos de simplicidade poderiamos fazer.
+        Reconheço também, que o código não está tão claro, algum tempo de refatoração melhoraria e muito."""))
+
+    # Titulo Conclusão -------------------------------------------------------
+    story.append(Paragraph("Conclusão e trabalhos futuros", styles['Heading2']))
+    story.append(Paragraph("Principais Aprendizados", styles['Heading3']))
+    story.append(Paragraph("""Os modelos foram eficazes para prever engajamento identificando características mais importantes.
+    No entanto, pode ser simplificado."""))
+
+    story.append(Paragraph("Propostas de Melhoria", styles['Heading3']))
+    story.append(Paragraph(" - Inclusão de features temporais: Pode ajudar o modelo a capturar padrões mais detalhados"))
+    story.append(Paragraph(""" - Experimentação com modelos não-lineares: pode melhorar a capacidade de prever resultados
+        em cenários mais complexos"""))
+    story.append(Paragraph("""Analisar subgrupos específicos: Dividir o dataset em segmentos menores pode 
+        revelar padrões que o modelo pode não ter achado."""))
     
     doc.build(story)
 

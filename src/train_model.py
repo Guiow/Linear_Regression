@@ -4,7 +4,8 @@ from sklearn.linear_model import LinearRegression, Ridge, Lasso
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 import matplotlib.pyplot as plt
 from preprocessing import load_preprocessed_data
-from model_visualization import plot_model_comparison, visualize_heterosterasticity_grapth as vhg
+from model_visualization import visualize_homosterasticity_grapth as vhg
+from model_comparison import create_comparison_plots
 
 class EngagementModel:
     def __init__(self, data_path='data/influencers.csv'):
@@ -13,11 +14,13 @@ class EngagementModel:
         self.target = '60_day_eng_rate'
         
     def preprocess_data(self):
+        """Separa dados de treino e teste"""
         X = self.df[self.features]
         y = self.df[self.target]
         return train_test_split(X, y, test_size=0.25, random_state=42)
         
     def train_models(self):
+        """Treina modelo"""
         X_train, X_test, y_train, y_test = self.preprocess_data()
         
         models = {
@@ -47,6 +50,7 @@ class EngagementModel:
         return results
     
 def plot_regularization_tec(name, y_test, y_pred):
+    """Cria os graficos da regressao sobre os dados"""
     plt.figure(figsize=(8, 6))
     plt.scatter(y_test, y_pred, alpha=0.5)
     plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--', lw=2)
@@ -83,5 +87,6 @@ def save_results(results):
 if __name__ == "__main__":
     model = EngagementModel()
     results = model.train_models()
-    plot_model_comparison(results)
     save_results(results)
+    create_comparison_plots(results)
+    
