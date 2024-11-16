@@ -4,57 +4,54 @@ RESULTADOS DOS MODELOS
 
 Linear Regression:
 ------------------
-R²: 0.8668
-MSE: 0.0111
-MAE: 0.0687
-CV Score (média): 0.8785
-CV Score (desvio): 0.0484
+R²: 0.8996
+MSE: 0.0115
+MAE: 0.0738
+CV Score (média): 0.8326
+CV Score (desvio): 0.1446
 
 Coeficientes:
-influence_score: 0.0075
-posts: -0.0044
-followers: -0.2666
-avg_likes: -0.0253
-new_post_avg_like: 1.1849
-total_likes: -0.0787
-country: -0.0002
+influence_score: 0.0072
+posts: -0.0061
+followers: -0.2722
+avg_likes: -0.0483
+new_post_avg_like: 1.2016
+total_likes: -0.0582
 
 ==================================================
 
 Ridge:
 ------
-R²: 0.8808
-MSE: 0.0099
-MAE: 0.0738
-CV Score (média): 0.8562
-CV Score (desvio): 0.0910
+R²: 0.8657
+MSE: 0.0153
+MAE: 0.0918
+CV Score (média): 0.8187
+CV Score (desvio): 0.0829
 
 Coeficientes:
-influence_score: -0.0113
-posts: -0.0330
-followers: -0.2449
-avg_likes: 0.0595
-new_post_avg_like: 0.8827
-total_likes: -0.0075
-country: -0.0000
+influence_score: -0.0038
+posts: -0.0236
+followers: -0.2445
+avg_likes: 0.1458
+new_post_avg_like: 0.8073
+total_likes: -0.0303
 
 ==================================================
 
 Lasso:
 ------
-R²: 0.8915
-MSE: 0.0090
-MAE: 0.0734
-CV Score (média): 0.8735
-CV Score (desvio): 0.0644
+R²: 0.9040
+MSE: 0.0110
+MAE: 0.0831
+CV Score (média): 0.8556
+CV Score (desvio): 0.0726
 
 Coeficientes:
 influence_score: -0.0000
-posts: -0.0308
-followers: -0.2093
+posts: -0.0310
+followers: -0.1999
 avg_likes: 0.0000
-new_post_avg_like: 0.9362
+new_post_avg_like: 0.8960
 total_likes: -0.0000
-country: -0.0000
 
 ==================================================

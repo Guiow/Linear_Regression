@@ -12,7 +12,7 @@ def eng_rate_distribution(df, docs_path):
     plt.figure(figsize=(10, 6))
     sns.histplot(data=df, x='60_day_eng_rate', bins=30)
     plt.title('Distribuição da Taxa de Engajamento')
-    plt.xlabel('Taxa de Engajamento (%)')
+    plt.xlabel('Taxa de Engajamento')
     plt.ylabel('Frequência')
     plt.savefig(f'{docs_path}/engagement_distribution.png')
     plt.close()

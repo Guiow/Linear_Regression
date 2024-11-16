@@ -14,6 +14,7 @@ def load_data(file_path):
     """Carrega os dados"""
     df = pd.read_csv(file_path)
     df = convert_metrics(df) # Converter colunas com 'k', 'm', 'b', '%' para valores numéricos
+    df = treat_null_values(df)
     return df
 
 def preprocess_data(df):
@@ -27,9 +28,9 @@ def preprocess_data(df):
     df = scale_features(df)
     #df = merge_features(df)
     
-    visualize_boxplots(df, 'boxplot_before_outliers')
+    visualize_boxplots(df, 'raw_df/boxplot_before_outliers')
     df = handle_outliers(df, 2)
-    visualize_boxplots(df, 'boxplot_after_outliers')
+    visualize_boxplots(df, 'processed_df/boxplot_after_outliers')
 
     print(f"Número final de registros: {len(df)}")
     return df

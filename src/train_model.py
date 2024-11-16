@@ -4,7 +4,7 @@ from sklearn.linear_model import LinearRegression, Ridge, Lasso
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 import matplotlib.pyplot as plt
 from preprocessing import load_preprocessed_data
-from model_visualization import plot_model_comparison
+from model_visualization import plot_model_comparison, visualize_heterosterasticity_grapth as vhg
 
 class EngagementModel:
     def __init__(self, data_path='data/influencers.csv'):
@@ -22,8 +22,8 @@ class EngagementModel:
         
         models = {
             'Linear Regression': LinearRegression(),
-            'Ridge': Ridge(alpha=1.0),
-            'Lasso': Lasso(alpha=0.01)# !! Esse só fica bom com alpha baixo não sei porque ainda
+            'Ridge': Ridge(alpha=1),
+            'Lasso': Lasso(alpha=0.01)
         }
         
         results = {}
@@ -43,6 +43,7 @@ class EngagementModel:
             results[name]['cv_std'] = cv_scores.std()
 
             plot_regularization_tec(name, y_test, y_pred)
+            vhg(y_test, y_pred, name)
         return results
     
 def plot_regularization_tec(name, y_test, y_pred):

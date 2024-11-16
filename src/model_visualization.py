@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def visualize_heterosterasticity_grapth(y_test, y_pred):
+def visualize_heterosterasticity_grapth(y_test, y_pred, title):
     residuals = y_test - y_pred
+
     # Calcula o desvio padrão dos residuos
     std_residuals = np.std(residuals)
     interval = 1.96
@@ -18,9 +19,10 @@ def visualize_heterosterasticity_grapth(y_test, y_pred):
     plt.axhline(upper_bound, color='blue', linestyle='--', label=f'Upper {interval:.2f}')
     plt.xlabel('Predicted Values')
     plt.ylabel('Residuals')
-    plt.title('Heteroscedasticity Test: Residuals vs. Predicted Values')
+    plt.title(f"Homoscedasticity {title}")
     plt.legend()
-    plt.show()
+    plt.savefig(f"docs/Homoscedasticity{title}")
+    plt.close()
 
 def plot_model_comparison(results):
     models = list(results.keys())
