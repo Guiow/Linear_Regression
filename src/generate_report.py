@@ -1,7 +1,7 @@
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
-from reportlab.lib.enums import TA_JUSTIFY
+from reportlab.lib.enums import TA_JUSTIFY, TA_CENTER
 
 def create_report():
     """Cria pdf com toda documentacao"""
@@ -19,18 +19,47 @@ def create_report():
         name='Justify',
         alignment=TA_JUSTIFY
     ))
+
+    # Estilos personalizados
+    styles.add(ParagraphStyle(
+        name='CenteredTitle',
+        parent=styles['Heading1'],
+        alignment=TA_CENTER,
+        fontSize=18,
+        spaceAfter=24
+    ))
+    
+    styles.add(ParagraphStyle(
+        name='Centered',
+        parent=styles['Normal'],
+        alignment=TA_CENTER,
+        fontSize=12,
+        spaceAfter=12
+    ))
     
     story = []
     
-    # Título
+    # Título da capa -------------------------------------------
     title = Paragraph(
         "Relatório Técnico: Implementação e Análise do Algoritmo de Regressão Linear",
-        styles['Heading1']
+        styles['CenteredTitle']
     )
     story.append(title)
-    story.append(Spacer(1, 12))
+    story.append(Spacer(1, 200))
+
+    # Nomes dos residentes
+    student_1 = Paragraph("Residente: Matheus Souza Queiroz", styles['Centered'])
+    student_2 = Paragraph("Residente: Guilherme Oliveira Araujo", styles['Centered'])
+    story.append(student_1)
+    story.append(student_2)
+    story.append(Spacer(1, 200))
+
+    # Data de entrega
+    delivery_date = Paragraph("Data de Entrega: 17/11/2024", styles['Centered'])
+    story.append(delivery_date)
+    story.append(Spacer(1, 120))
     
-    # Resumo
+    # Titulo Resumo -----------------------------------------
     story.append(Paragraph("Resumo", styles['Heading2']))
     story.append(Paragraph(
         """O projeto visa implementar um modelo preditivo para estimar a taxa de engajamento de influenciadores

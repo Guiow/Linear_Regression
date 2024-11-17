@@ -41,7 +41,7 @@ class EngagementModel:
                 'coef': dict(zip(self.features, model.coef_))
             }
             
-            cv_scores = cross_val_score(model, X_train, y_train, cv=5)
+            cv_scores = cross_val_score(model, X_train, y_train, cv=10)
             results[name]['cv_mean'] = cv_scores.mean()
             results[name]['cv_std'] = cv_scores.std()
 

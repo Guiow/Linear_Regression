@@ -7,8 +7,8 @@ Linear Regression:
 R²: 0.8996
 MSE: 0.0115
 MAE: 0.0738
-CV Score (média): 0.8326
-CV Score (desvio): 0.1446
+CV Score (média): 0.8646
+CV Score (desvio): 0.1056
 
 Coeficientes:
 influence_score: 0.0072
@@ -25,8 +25,8 @@ Ridge:
 R²: 0.8657
 MSE: 0.0153
 MAE: 0.0918
-CV Score (média): 0.8187
-CV Score (desvio): 0.0829
+CV Score (média): 0.8405
+CV Score (desvio): 0.0822
 
 Coeficientes:
 influence_score: -0.0038
@@ -43,8 +43,8 @@ Lasso:
 R²: 0.9040
 MSE: 0.0110
 MAE: 0.0831
-CV Score (média): 0.8556
-CV Score (desvio): 0.0726
+CV Score (média): 0.8625
+CV Score (desvio): 0.0761
 
 Coeficientes:
 influence_score: -0.0000
