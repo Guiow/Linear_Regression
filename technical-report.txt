@@ -1,6 +1,6 @@
 Relatório Técnico: Implementação e Análise do Algoritmo de Regressão Linear
 
-Autores: Matheus Souza Queiroz
+Autores: Matheus Souza Queiroz e Guilherme Oliveira
 
 Data: 17 de Novembro de 2024
 
